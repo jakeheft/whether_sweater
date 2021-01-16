@@ -101,6 +101,4 @@ describe CoordinatesService do
  		expect(location).to have_key(:mapUrl)
 		expect(location[:mapUrl]).to be_a(String)
 	end
-
-	## sad path for incorrect results (maybe if just city is entered and multiple results come back, that wouldn't be good)
 end
