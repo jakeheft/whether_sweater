@@ -15,6 +15,8 @@ describe ForecastsService do
 		expect(forecast_data).to have_key(:timezone_offset)
 		expect(forecast_data[:timezone_offset]).to be_a(Integer)
 		expect(forecast_data).to have_key(:current)
+		expect(forecast_data).to_not have_key(:minutely)
+		expect(forecast_data).to_not have_key(:alerts)
 		expect(forecast_data[:current]).to be_a(Hash)
 
 		current = forecast_data[:current]
