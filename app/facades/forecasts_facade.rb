@@ -11,5 +11,8 @@ class ForecastsFacade
 		forecast_data = ForecastsService.fetch_forecast(lat_lng)
 		current_weather = CurrentWeather.new(forecast_data[:current])
 		require 'pry'; binding.pry
+		hourly_weather = forecast_data[:hourly][0..7].map do |hour_data|
+			HourWeather.new(hour_data)
+		end
 	end
 end
