@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe DailyWeather do
-	it 'exists with attributes' do
-		data = {
+	before :each do
+		@data = {
 			dt: 1611252000,
   		sunrise: 1611235592,
   		sunset: 1611273474,
@@ -38,7 +38,9 @@ describe DailyWeather do
   		rain: 1.28,
   		uvi: 1.88
 		}
-		weather = DailyWeather.new(data)
+	end
+	it 'exists with attributes' do
+		weather = DailyWeather.new(@data)
 
 		expect(weather.date).to eq('2021-01-21')
 		expect(weather.sunrise).to eq('2021-01-21 06:26:32 -0700')
@@ -49,9 +51,9 @@ describe DailyWeather do
 		expect(weather.icon).to eq('10d')
 	end
 	
-	it '.get_date()' do
-		date_time = 1610915015
-		date = DailyWeather.get_date(date_time)
+	it '#get_date()' do
+		weather = DailyWeather.new(@data)
+		date = weather.get_date(1610915015)
 
 		expect(date).to eq('2021-01-17')
 	end
