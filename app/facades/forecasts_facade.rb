@@ -1,13 +1,6 @@
 class ForecastsFacade
-	# def self.get_forecasts(lat_lng)
-	# 	forecast_data = ForecastsService.fetch_forecast(lat_lng)
-	# 	weather = Weather.new(forecast_data)
-
-	# 	require 'pry'; binding.pry
-	# end
-
-	def self.get_forecasts(lat_lng)
-		### do we want to remove coordinates facade and call coordinates service from this method (like Ian suggested in video) - would need to call first, obviously
+	def self.get_forecasts(location)
+		lat_lng = get_coordinates(location)
 		forecast_data = ForecastsService.fetch_forecast(lat_lng)
 		current_weather = CurrentWeather.new(forecast_data[:current])
 		hourly_weather = forecast_data[:hourly][0..7].map do |hour_data|
@@ -17,5 +10,25 @@ class ForecastsFacade
 			DailyWeather.new(daily_data)
 		end
 		Forecast.new(current_weather, hourly_weather, daily_weather)
+	end
+
+	def self.get_coordinates(location)
+		# if results.count > 3
+		# if results.count < 1
+		coordinate_data = CoordinatesService.fetch_coordinates(location)
+		if coordinate_data[:results][0][:locations].count > 3
+			return 'ambiguous results, please refine query'
+		else
+			coords = get_lat_long(coordinate_data)
+			if coords == ({:lat=>39.390897, :lng=>-99.066067})
+				'invalid location queried'
+			else
+				coords
+			end
+		end
+	end
+
+	def self.get_lat_long(coordinate_data)
+		coordinate_data[:results][0][:locations][0][:latLng]
 	end
 end
