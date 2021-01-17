@@ -61,7 +61,7 @@ describe HourlyWeather do
 		direction12 = weather.get_direction(220)
 		direction13 = weather.get_direction(245)
 		direction14 = weather.get_direction(281.24)
-		direction15 = weather.get_direction(303)
+		direction15 = weather.get_direction(281.25)
 		direction16 = weather.get_direction(320)
 		direction17 = weather.get_direction(328)
 
