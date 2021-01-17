@@ -14,5 +14,8 @@ class ForecastsFacade
 		hourly_weather = forecast_data[:hourly][0..7].map do |hour_data|
 			HourWeather.new(hour_data)
 		end
+		daily_weather = forecast_data[:daily][0..4].map do |daily_data|
+			DailyWeather.new(daily_data)
+		end
 	end
 end
