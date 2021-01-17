@@ -14,4 +14,6 @@ describe ForecastsFacade do
 		expect(forecast.hourly.count).to eq(8)
 		expect(forecast.hourly.first).to be_a(HourlyWeather)
 	end
+
+	### test for it can detect ambiguous/vague search (incorrect city/state input, results are too many (greater than 3?))
 end
