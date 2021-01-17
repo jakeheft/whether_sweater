@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe HourWeather do
+describe HourlyWeather do
 	it 'exists with attributes' do
 		data = {
 			dt: 1610928000,
@@ -24,7 +24,7 @@ describe HourWeather do
 			],
 			pop: 0
 		}
-		weather = HourWeather.new(data)
+		weather = HourlyWeather.new(data)
 
 		expect(weather.time).to eq('17:00')
 		expect(weather.temp).to eq(59.18)
@@ -36,7 +36,7 @@ describe HourWeather do
 
 	it '.get_direction()' do
 		date_time = 1610884140
-		time = HourWeather.get_time(date_time)
+		time = HourlyWeather.get_time(date_time)
 
 		expect(time).to eq('04:49')
 	end
@@ -47,10 +47,10 @@ describe HourWeather do
 		wind_deg3 = 360
 		wind_deg4 = 237.8
 
-		direction1 = HourWeather.get_direction(wind_deg1)
-		direction2 = HourWeather.get_direction(wind_deg2)
-		direction3 = HourWeather.get_direction(wind_deg3)
-		direction4 = HourWeather.get_direction(wind_deg4)
+		direction1 = HourlyWeather.get_direction(wind_deg1)
+		direction2 = HourlyWeather.get_direction(wind_deg2)
+		direction3 = HourlyWeather.get_direction(wind_deg3)
+		direction4 = HourlyWeather.get_direction(wind_deg4)
 
 		expect(direction1).to eq('from E')
 		expect(direction2).to eq('from N')

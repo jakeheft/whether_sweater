@@ -32,9 +32,9 @@ describe ForecastSerializer do
 				}
 			}
 
-			weather = Weather.new(data)
-			# test = ForecastSerializer.serialize_forecast(weather)
-			test = ForecastSerializer.new(weather)
+			forecast = Forecast.new(data)
+			# test = ForecastSerializer.serialize_forecast(forecast)
+			test = ForecastSerializer.new(forecast)
 			require 'pry'; binding.pry
 	end
 end
