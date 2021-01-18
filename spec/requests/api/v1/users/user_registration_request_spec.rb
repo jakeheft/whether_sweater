@@ -9,7 +9,27 @@ describe 'When a user registers' do
   		"password_confirmation": "password"
 		}
 
-	post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		
+		expect(response).to be_successful
+		
+		user_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(user_data).to be_a(Hash)
+		expect(user_data).to have_key(:data)
+		expect(user_data[:data]).to be_a(Hash)
+		expect(user_data[:data]).to have_key(:type)
+		expect(user_data[:data][:type]).to be_a(String)
+		expect(user_data[:data][:type]).to eq('users')
+		expect(user_data[:data]).to have_key(:id)
+		expect(user_data[:data][:id]).to be_a(String)
+		expect(user_data[:data]).to have_key(:attributes)
+		expect(user_data[:data][:attributes]).to be_a(Hash)
+		expect(user_data[:data][:attributes]).to have_key(:email)
+		expect(user_data[:data][:attributes][:email]).to be_a(String)
+		expect(user_data[:data][:attributes][:email]).to eq('jake@example.com')
+		expect(user_data[:data][:attributes]).to have_key(:api_key)
+		expect(user_data[:data][:attributes][:api_key]).to be_a(String)
 
 	end
 end
