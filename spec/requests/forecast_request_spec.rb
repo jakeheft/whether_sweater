@@ -2,14 +2,14 @@ require 'rails_helper'
 
 describe 'Weather API' do
 	it 'can get weather for a city' do
-		get '/api/v1/forecast?location=denver,co'
-		
+		get '/api/v1/forecast?location='
+		require 'pry'; binding.pry
 		expect(response).to be_successful
 		
 	end
 
 	xit 'can get coordinates needed in request' do
-		get '/api/v1/forecast?location=denver,co'
+		get '/api/v1/forecast?location='
 
 		expect(response).to be_successful
 		require 'pry'; binding.pry

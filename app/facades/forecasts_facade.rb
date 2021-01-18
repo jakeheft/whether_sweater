@@ -1,6 +1,8 @@
 class ForecastsFacade
 	def self.get_forecasts(location)
 		lat_lng = get_coordinates(location)
+		return lat_lng if lat_lng == 'invalid location queried'
+		return lat_lng if lat_lng == 'ambiguous results, please refine query'
 		forecast_data = ForecastsService.fetch_forecast(lat_lng)
 		current_weather = CurrentWeather.new(forecast_data[:current])
 		hourly_weather = forecast_data[:hourly][0..7].map do |hour_data|
