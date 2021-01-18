@@ -6,13 +6,13 @@ describe ForecastsFacade do
 		forecast = ForecastsFacade.get_forecasts(location)
 
 		expect(forecast).to be_a(Forecast)
-		expect(forecast.current).to be_a(CurrentWeather)
-		expect(forecast.daily).to be_an(Array)
-		expect(forecast.daily.count).to eq(5)
-		expect(forecast.daily.first).to be_a(DailyWeather)
-		expect(forecast.hourly).to be_an(Array)
-		expect(forecast.hourly.count).to eq(8)
-		expect(forecast.hourly.first).to be_a(HourlyWeather)
+		expect(forecast.current_weather).to be_a(CurrentWeather)
+		expect(forecast.daily_weather).to be_an(Array)
+		expect(forecast.daily_weather.count).to eq(5)
+		expect(forecast.daily_weather.first).to be_a(DailyWeather)
+		expect(forecast.hourly_weather).to be_an(Array)
+		expect(forecast.hourly_weather.count).to eq(8)
+		expect(forecast.hourly_weather.first).to be_a(HourlyWeather)
 	end
 
 	it '.get_coordinates()' do

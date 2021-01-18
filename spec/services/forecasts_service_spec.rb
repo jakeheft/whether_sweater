@@ -141,7 +141,7 @@ describe ForecastsService do
 		expect(daily).to have_key(:humidity)
 		expect(daily[:humidity]).to be_an(Integer).or be_a(Float)
 		expect(daily).to have_key(:dew_point)
-		expect(daily[:dew_point]).to be_a(Float)
+		expect(daily[:dew_point]).to be_an(Integer).or be_a(Float)
 		expect(daily).to have_key(:uvi)
 		expect(daily[:uvi]).to be_an(Integer).or be_a(Float)
 		expect(daily).to have_key(:clouds)
