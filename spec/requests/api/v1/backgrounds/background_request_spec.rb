@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe 'Unsplash API' do
 	it 'can get a background photo of a city' do
-		get '/api/v1/backgrounds?location=denver,co'
+		headers = {"CONTENT_TYPE" => "application/json"}
+
+		get '/api/v1/backgrounds?location=denver,co', headers: headers
 
 		expect(response).to be_successful
 
