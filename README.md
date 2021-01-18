@@ -16,7 +16,58 @@ UNSPLASH_API_KEY: <API key>
 MAPQUEST_API_KEY: <API key>
 OPENWEATHER_API_KEY: <API key>
 ```
-	
+
+## Endpoints
+#### Forecast Request
+```
+GET '/api/v1/forecast?location=<enter city & state/country (e.g denver,co)>
+```
+Example Forecast Response
+```
+{
+    "data": {
+        "id": null,
+        "type": "forecast",
+        "attributes": {
+            "current_weather": {
+                "date_time": "2021-01-18 09:47:23 -0700",
+                "sunrise": "2021-01-18 07:17:38 -0700",
+                "sunset": "2021-01-18 17:02:55 -0700",
+                "temp": 34.07,
+                "feels_like": 25.92,
+                "humidity": 61,
+                "uvi": 1.23,
+                "visibility": 10000,
+                "conditions": "scattered clouds",
+                "icon": "03d"
+            },
+            "daily_weather": [
+                {
+                    "date": "2021-01-18",
+                    "sunrise": "2021-01-18 07:17:38 -0700",
+                    "sunset": "2021-01-18 17:02:55 -0700",
+                    "max_temp": 42.03,
+                    "min_temp": 28.45,
+                    "conditions": "clear sky",
+                    "icon": "01d"
+                },
+              ...
+            ],
+            "hourly_weather": [
+                {
+                    "time": "09:00",
+                    "temp": 34.07,
+                    "wind_speed": "5.97 mph",
+                    "wind_direction": "from SSE",
+                    "conditions": "scattered clouds",
+                    "icon": "03d"
+                },
+              ...
+            ]
+        }
+    }
+}
+```
 # README
 
 This README would normally document whatever steps are necessary to get the
