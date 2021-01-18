@@ -68,6 +68,27 @@ Example Forecast Response
     }
 }
 ```
+#### Background Image Request
+```
+GET '/api/v1/backgrounds?location=<enter city & state/country (e.g denver,co)>
+```
+Example Background Image Response
+```
+{
+  "data": {
+    "id": null,
+    "type": "images",
+    "attributes": {
+      "location": "ames,ia",
+      "image_url": "https://images.unsplash.com/photo-1558220572-03669f15deb9?ixid=MXwxOTg5MTl8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbjolMjBhbWVzLGlhfGVufDB8fHw&ixlib=rb-1.2.1",
+      "photographer": "Akash Dutta",
+      "photographer_url": "https://unsplash.com/@akashd91",
+      "site_credit": "Image from Unsplash"
+    }
+  }
+}
+```
+
 # README
 
 This README would normally document whatever steps are necessary to get the
