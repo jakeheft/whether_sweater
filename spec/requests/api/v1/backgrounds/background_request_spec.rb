@@ -6,15 +6,15 @@ describe 'Unsplash API' do
 
 		expect(response).to be_successful
 
-		photo_data = JSON.parse(response.body, symbolize_name: true)
-
+		photo_data = JSON.parse(response.body, symbolize_names: true)
+		
 		expect(photo_data).to be_a(Hash)
 		expect(photo_data).to have_key(:data)
 		expect(photo_data[:data]).to be_a(Hash)
 		expect(photo_data[:data]).to have_key(:type)
 		expect(photo_data[:data][:type]).to be_a(String)
 		expect(photo_data[:data]).to have_key(:id)
-		expect(photo_data[:data][:id]).to be_a(nil)
+		expect(photo_data[:data][:id]).to eq(nil)
 		expect(photo_data[:data]).to have_key(:attributes)
 		expect(photo_data[:data][:attributes]).to be_a(Hash)
 
