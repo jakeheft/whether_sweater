@@ -1,11 +1,11 @@
 class Api::V1::UsersController < ApplicationController
 	def create
-		User.create(user_params)
-		require 'pry'; binding.pry
-	end
-
-	private
-	def user_params
-		params.permit(:email, :password)#, :api_key)
+		new_user = User.new(
+			email: params[:user][:email],
+			password: params[:user][:password],
+			api_key: SecureRandom.uuid
+		)
+		new_user.save
+		render json: UsersSerializer.new(new_user)
 	end
 end
