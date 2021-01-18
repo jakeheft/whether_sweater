@@ -5,8 +5,8 @@ class CurrentWeather
 		@date_time = Time.at(data[:dt]).to_s
 		@sunrise = Time.at(data[:sunrise]).to_s
 		@sunset = Time.at(data[:sunset]).to_s
-		@temp = data[:temp]
-		@feels_like = data[:feels_like]
+		@temp = data[:temp].to_f
+		@feels_like = data[:feels_like].to_f
 		@humidity = data[:humidity]
 		@uvi = data[:uvi]
 		@visibility = data[:visibility]

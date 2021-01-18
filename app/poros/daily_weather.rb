@@ -5,8 +5,8 @@ class DailyWeather
 		@date = get_date(data[:dt])
 		@sunrise = Time.at(data[:sunrise]).to_s
 		@sunset = Time.at(data[:sunset]).to_s
-		@max_temp = data[:temp][:max]
-		@min_temp = data[:temp][:min]
+		@max_temp = data[:temp][:max].to_f
+		@min_temp = data[:temp][:min].to_f
 		@conditions = data[:weather][0][:description]
 		@icon = data[:weather][0][:icon]
 	end

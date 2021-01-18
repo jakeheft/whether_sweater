@@ -3,7 +3,7 @@ class HourlyWeather
 
 	def initialize(data)
 		@time = get_time(data[:dt])
-		@temp = data[:temp]
+		@temp = data[:temp].to_f
 		@wind_speed = "#{data[:wind_speed]} mph"
 		@wind_direction = get_direction(data[:wind_deg])
 		@conditions = data[:weather][0][:description]
