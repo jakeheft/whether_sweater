@@ -8,4 +8,14 @@ class ErrorSerializer
 			}
 		}
 	end
+
+	def self.invalid_location(message)
+		{
+			data: {
+				id: nil,
+				type: 'error',
+				message: message
+			}
+		}
+	end
 end
