@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-	validates_presence_of :email
-	validates_presence_of :password_digest
-	validates_presence_of :api_key
+	validates :email, uniqueness: true, presence: true
+	validates_presence_of :password, require: true
+	validates :api_key, uniqueness: true, presence: true
 end
