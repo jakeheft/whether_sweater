@@ -51,8 +51,8 @@ describe 'When a user registers' do
 
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
 
-		expect(response.status).to eq(409)
 		expect(response).to_not be_successful
+		expect(response.status).to eq(409)
 
 		error_data = JSON.parse(response.body, symbolize_names: true)
 
@@ -76,7 +76,8 @@ describe 'When a user registers' do
 		}
 
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
-		
+
+		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
 
 		error_data = JSON.parse(response.body, symbolize_names: true)
@@ -101,6 +102,7 @@ describe 'When a user registers' do
 
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
 
+		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
 
 		error_data = JSON.parse(response.body, symbolize_names: true)
@@ -122,6 +124,7 @@ describe 'When a user registers' do
 
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
 
+		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
 
 		error_data = JSON.parse(response.body, symbolize_names: true)
@@ -143,6 +146,7 @@ describe 'When a user registers' do
 
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
 
+		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
 
 		error_data = JSON.parse(response.body, symbolize_names: true)
