@@ -161,10 +161,4 @@ describe 'When a user registers' do
 		expect(error_data[:data]).to have_key(:message)
 		expect(error_data[:data][:message]).to eq('email must be entered')
 	end
-
-	# test for missing field
-	# For login spec
-	# test for password incorrect (401 error) 'the email or password entered was incorrect'
-	# test for email incorrect (401 error) 'the email or password entered was incorrect'
-
 end
