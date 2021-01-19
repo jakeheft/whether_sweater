@@ -1,4 +1,4 @@
-class CoordinatesService
+class MapsService
 	def self.fetch_coordinates(location)
 		conn = Faraday.new('https://www.mapquestapi.com')
 		response = conn.get('/geocoding/v1/address') do |req|

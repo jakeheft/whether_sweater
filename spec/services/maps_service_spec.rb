@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe CoordinatesService do
+describe MapsService do
 	it 'can get coordinates with city, state' do
 		location = 'denver,co'
 
-		coordinate_data = CoordinatesService.fetch_coordinates(location)
+		coordinate_data = MapsService.fetch_coordinates(location)
 		expect(coordinate_data).to be_a(Hash)
 		expect(coordinate_data).to have_key(:info)
 		expect(coordinate_data).to have_key(:options)
