@@ -5,8 +5,8 @@ class MunchiesFacade
 		forecast = ForecastsFacade.get_forecasts(ending)
 		dest_time = time_at_destination(destination.travel_time)
 		restaurant_data = RestaurantsService.fetch_restaurant(ending, food, dest_time)
-		require 'pry'; binding.pry
 		restaurant = Restaurant.new(restaurant_data[:businesses][0])
+		Munchie.new(destination, forecast.current_weather, restaurant)
 	end
 	
 	def self.time_at_destination(travel_time)
