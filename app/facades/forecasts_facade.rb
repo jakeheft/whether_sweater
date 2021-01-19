@@ -17,7 +17,7 @@ class ForecastsFacade
 	def self.get_coordinates(location)
 		# if results.count > 3
 		# if results.count < 1
-		coordinate_data = CoordinatesService.fetch_coordinates(location)
+		coordinate_data = MapsService.fetch_coordinates(location)
 		if coordinate_data[:results][0][:locations].count > 3
 			return 'ambiguous results, please refine query'
 		else
