@@ -92,6 +92,72 @@ describe 'When a user registers' do
 		expect(error_data[:data][:message]).to eq('passwords did not match')		
 	end
 
+	it "won't register if field empty" do
+		headers = {"CONTENT_TYPE" => "application/json"}
+		user_params = {
+  		"email": "jake@example.com",
+  		"password": "password"
+		}
+
+		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+
+		expect(response.status).to eq(403)
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('passwords did not match')
+
+		user_params = {
+  		"email": "jake@example.com",
+  		"password_confirmation": "password"
+		}
+
+		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+
+		expect(response.status).to eq(403)
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('passwords did not match')
+
+		user_params = {
+			"password": "password",
+			"password_confirmation": "password"
+		}
+
+		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+
+		expect(response.status).to eq(403)
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('email must be entered')
+	end
+
 	# test for missing field
 	# For login spec
 	# test for password incorrect (401 error) 'the email or password entered was incorrect'
