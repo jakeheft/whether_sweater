@@ -38,4 +38,61 @@ describe 'As a registered user' do
 		expect(user_data[:data][:attributes][:api_key]).to be_a(String)
 		expect(user_data[:data][:attributes][:api_key]).to eq('9834uoekdfhg9eo')
 	end
+
+	it "can't login with incorrect credentials" do
+		user = User.create!(
+			email: 'jake@example.com',
+			password: 'password',
+			password_confirmation: 'password',
+			api_key: '9834uoekdfhg9eo'
+		)
+		headers = {"CONTENT_TYPE" => "application/json"}
+		login_params = {
+  		"email": "person@example.com",
+  		"password": "password"
+		}
+
+		post '/api/v1/sessions', headers: headers, params: JSON.generate(user: login_params)
+
+		expect(response).to_not be_successful
+		expect(response.status).to eq(401)
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('invalid login credentials')
+
+		headers = {"CONTENT_TYPE" => "application/json"}
+		login_params = {
+  		"email": "jake@example.com",
+  		"password": "PASSWORD"
+		}
+
+		post '/api/v1/sessions', headers: headers, params: JSON.generate(user: login_params)
+
+		expect(response).to_not be_successful
+		expect(response.status).to eq(401)
+		
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('invalid login credentials')
+	end
+
+	# test for password incorrect (401 error) 'the email or password entered was incorrect'
+	# test for email incorrect (401 error) 'the email or password entered was incorrect'
 end
