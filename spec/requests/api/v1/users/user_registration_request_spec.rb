@@ -38,6 +38,39 @@ describe 'When a user registers' do
 		expect(user_data[:data][:attributes][:email]).to eq('jake@example.com')
 		expect(user_data[:data][:attributes]).to have_key(:api_key)
 		expect(user_data[:data][:attributes][:api_key]).to be_a(String)
-
 	end
+
+	it "won't allow a user to register if email already taken" do
+		create(:user, email: 'jake@example.com')
+		headers = {"CONTENT_TYPE" => "application/json"}
+		user_params = {
+  		"email": "jake@example.com",
+  		"password": "password",
+  		"password_confirmation": "password"
+		}
+
+		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+
+		expect(response.status).to eq(409)
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('this email already exists in the system')
+	end
+
+
+
+	# test for password not matching
+	# only create api_key if user saves (would have to make it not a validation if so)
+	# test for same email entered
+	# test for missing field
+
 end
