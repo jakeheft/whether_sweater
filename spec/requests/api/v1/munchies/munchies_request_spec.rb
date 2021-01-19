@@ -7,7 +7,7 @@ describe 'As a site visitor' do
 		expect(response).to be_successful
 
 		munchie_data = JSON.parse(response.body, symbolize_names: true)
-		
+
 		expect(munchie_data).to be_a(Hash)
 		expect(munchie_data).to have_key(:data)
 		expect(munchie_data[:data]).to be_a(Hash)
@@ -38,5 +38,9 @@ describe 'As a site visitor' do
 		expect(restaurant[:name]).to be_a(String)
 		expect(restaurant).to have_key(:address)
 		expect(restaurant[:address]).to be_a(String)
+	end
+
+	it 'returns error if no restaurants open' do
+		### this was my next test, but ran out of time
 	end
 end
