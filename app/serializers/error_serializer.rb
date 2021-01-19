@@ -48,4 +48,14 @@ class ErrorSerializer
 			}
 		}
 	end
+
+	def self.invalid_credentials
+		{
+			data: {
+				id: nil,
+				type: 'error',
+				message: 'invalid login credentials'
+			}
+		}
+	end
 end
