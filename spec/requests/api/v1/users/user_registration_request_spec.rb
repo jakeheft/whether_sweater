@@ -52,6 +52,7 @@ describe 'When a user registers' do
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
 
 		expect(response.status).to eq(409)
+		expect(response).to_not be_successful
 
 		error_data = JSON.parse(response.body, symbolize_names: true)
 
@@ -66,11 +67,34 @@ describe 'When a user registers' do
 		expect(error_data[:data][:message]).to eq('this email already exists in the system')
 	end
 
+	it 'must verify password matches password confirmation' do
+		headers = {"CONTENT_TYPE" => "application/json"}
+		user_params = {
+  		"email": "jake@example.com",
+  		"password": "password",
+  		"password_confirmation": "wordpass"
+		}
 
+		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		
+		expect(response.status).to eq(403)
 
-	# test for password not matching
-	# only create api_key if user saves (would have to make it not a validation if so)
-	# test for same email entered
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data).to be_a(Hash)
+		expect(error_data).to have_key(:data)
+		expect(error_data[:data]).to be_a(Hash)
+		expect(error_data[:data]).to have_key(:id)
+		expect(error_data[:data][:id]).to eq(nil)
+		expect(error_data[:data]).to have_key(:type)
+		expect(error_data[:data][:type]).to eq('error')
+		expect(error_data[:data]).to have_key(:message)
+		expect(error_data[:data][:message]).to eq('passwords did not match')		
+	end
+
 	# test for missing field
+	# For login spec
+	# test for password incorrect (401 error) 'the email or password entered was incorrect'
+	# test for email incorrect (401 error) 'the email or password entered was incorrect'
 
 end
