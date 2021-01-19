@@ -6,6 +6,6 @@ class Api::V1::UsersController < ApplicationController
 			api_key: SecureRandom.uuid
 		)
 		new_user.save
-		render json: UsersSerializer.new(new_user)
+		render json: UsersSerializer.new(new_user), status: :created
 	end
 end
