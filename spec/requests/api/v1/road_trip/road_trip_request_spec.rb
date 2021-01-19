@@ -44,4 +44,7 @@ describe 'As a registered user' do
 	end
 
 	### test for no api key, 401 status returned
+	### test if route imossible (ALSO test this in facade)
+	### test for missing field
+	### test if destination matches origin
 end
