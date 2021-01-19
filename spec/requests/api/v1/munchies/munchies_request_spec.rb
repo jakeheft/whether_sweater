@@ -7,7 +7,7 @@ describe 'As a site visitor' do
 		expect(response).to be_successful
 
 		munchie_data = JSON.parse(response.body, symbolize_names: true)
-
+		
 		expect(munchie_data).to be_a(Hash)
 		expect(munchie_data).to have_key(:data)
 		expect(munchie_data[:data]).to be_a(Hash)
@@ -18,10 +18,10 @@ describe 'As a site visitor' do
 		expect(munchie_data[:data]).to have_key(:attributes)
 		expect(munchie_data[:data][:attributes]).to be_a(Hash)
 		
-		attributes = restaurants[:data][:attributes]
+		attributes = munchie_data[:data][:attributes]
 
-		expect(attributes).to have_key(:destinaton_city)
-		expect(attributes[:destinaton_city]).to be_a(String)
+		expect(attributes).to have_key(:destination_city)
+		expect(attributes[:destination_city]).to be_a(String)
 		expect(attributes).to have_key(:travel_time)
 		expect(attributes[:travel_time]).to be_a(String)
 		expect(attributes).to have_key(:forecast)
@@ -31,7 +31,7 @@ describe 'As a site visitor' do
 		expect(attributes[:forecast]).to have_key(:temperature)
 		expect(attributes[:forecast][:temperature]).to be_a(String)
 
-		restaurant = munchie_data[:data][:restaurant]
+		restaurant = attributes[:restaurant]
 		
 		expect(restaurant).to be_a(Hash)
 		expect(restaurant).to have_key(:name)
