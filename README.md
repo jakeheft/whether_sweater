@@ -88,7 +88,29 @@ Example Background Image Response
   }
 }
 ```
+#### User Registration Request
+```
+POST '/api/v1/users'
 
+{
+  "email": "whatever@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+```
+Example Successful Registration Response:
+```
+{
+  "data": {
+    "id": null,
+    "type": "users",
+    "attributes": {
+      "email": "whatever@example.com",
+      "api_key": "61Se811f2-03fa-4rdf-b95a-e5290a6719"
+    }
+  }
+}
+```
 # README
 
 This README would normally document whatever steps are necessary to get the

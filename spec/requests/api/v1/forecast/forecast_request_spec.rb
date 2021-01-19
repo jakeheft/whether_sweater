@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe 'Weather API' do
 	it 'can get weather for a city' do
-		get '/api/v1/forecast?location=denver,co'
+		headers = {"CONTENT_TYPE" => "application/json"}
+
+		get '/api/v1/forecast?location=denver,co', headers: headers
 
 		expect(response).to be_successful
 		
