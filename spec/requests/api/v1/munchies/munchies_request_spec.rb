@@ -1,7 +1,4 @@
-'munchie' 
-'rails_helpe
-nchie' 
-'rails_helper'
+require 'rails_helper'
 
 describe 'As a site visitor' do
 	it 'can get directions and a restaurant of a certain type' do
