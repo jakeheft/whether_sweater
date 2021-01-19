@@ -38,4 +38,14 @@ class ErrorSerializer
 			}
 		}
 	end
+
+	def self.no_email
+		{
+			data: {
+				id: nil,
+				type: 'error',
+				message: 'email must be entered'
+			}
+		}
+	end
 end
