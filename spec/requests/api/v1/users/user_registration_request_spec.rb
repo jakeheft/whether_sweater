@@ -1,18 +1,26 @@
 require 'rails_helper'
 
 describe 'When a user registers' do
-	it 'can pass registration data through json' do
+	it 'can pass registration data through json to create a User' do
 		headers = {"CONTENT_TYPE" => "application/json"}
 		user_params = {
   		"email": "jake@example.com",
   		"password": "password",
   		"password_confirmation": "password"
 		}
+		
+		expect(User.last).to eq(nil)
 
 		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
 		
 		expect(response).to be_successful
-		
+		expect(response.status).to eq(201)
+		expect(User.last).to be_a(User)
+		expect(User.last.id).to be_an(Integer)
+		expect(User.last.email).to be_a(String)
+		expect(User.last.email).to eq('jake@example.com')
+		expect(User.last.api_key).to be_a(String)
+
 		user_data = JSON.parse(response.body, symbolize_names: true)
 
 		expect(user_data).to be_a(Hash)
