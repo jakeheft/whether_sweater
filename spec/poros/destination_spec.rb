@@ -13,4 +13,15 @@ describe Destination do
 		expect(destination.city).to eq('Pueblo, CO')
 		expect(destination.travel_time).to eq('01 hours 44 min')
 	end
+
+	it '#readable_time()' do
+		time_data = "01:44:22"
+		location_data = {
+			adminArea5: 'Pueblo',
+      adminArea3: 'CO',
+		}
+		destination = Destination.new(time_data, location_data)
+
+		expect(destination.readable_time(time_data)).to eq('01 hours 44 min')
+	end
 end
