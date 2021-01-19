@@ -39,7 +39,7 @@ describe 'As a registered user' do
 		expect(user_data[:data][:attributes][:api_key]).to eq('9834uoekdfhg9eo')
 	end
 
-	it "can't login with incorrect credentials" do
+	it "can't login with incorrect email" do
 		user = User.create!(
 			email: 'jake@example.com',
 			password: 'password',
@@ -68,7 +68,15 @@ describe 'As a registered user' do
 		expect(error_data[:data][:type]).to eq('error')
 		expect(error_data[:data]).to have_key(:message)
 		expect(error_data[:data][:message]).to eq('invalid login credentials')
+	end
 
+	it "can't login with incorrect password" do
+		user = User.create!(
+			email: 'jake@example.com',
+			password: 'password',
+			password_confirmation: 'password',
+			api_key: '9834uoekdfhg9eo'
+		)
 		headers = {"CONTENT_TYPE" => "application/json"}
 		login_params = {
   		"email": "jake@example.com",
@@ -92,7 +100,4 @@ describe 'As a registered user' do
 		expect(error_data[:data]).to have_key(:message)
 		expect(error_data[:data][:message]).to eq('invalid login credentials')
 	end
-
-	# test for password incorrect (401 error) 'the email or password entered was incorrect'
-	# test for email incorrect (401 error) 'the email or password entered was incorrect'
 end
