@@ -28,4 +28,14 @@ class ErrorSerializer
 			}
 		}
 	end
+
+	def self.passwords_dont_match
+		{
+			data: {
+				id: nil,
+				type: 'error',
+				message: 'passwords did not match'
+			}
+		}
+	end
 end
