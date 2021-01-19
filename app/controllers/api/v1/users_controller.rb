@@ -3,8 +3,7 @@ class Api::V1::UsersController < ApplicationController
 		new_user = User.new(
 			email: params[:user][:email],
 			password: params[:user][:password],
-			api_key: SecureRandom.uuid
-		)
+			api_key: SecureRandom.uuid)
 		if params[:user][:password] != params[:user][:password_confirmation]
 			render json: ErrorSerializer.passwords_dont_match, status: :forbidden
 		elsif User.where(email: params[:user][:email]) != []
