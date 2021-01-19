@@ -18,4 +18,14 @@ class ErrorSerializer
 			}
 		}
 	end
+
+	def self.duplicate_email
+		{
+			data: {
+				id: nil,
+				type: 'error',
+				message: 'this email already exists in the system'
+			}
+		}
+	end
 end
