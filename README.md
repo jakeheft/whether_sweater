@@ -111,6 +111,29 @@ Example Successful Registration Response:
   }
 }
 ```
+
+#### User Login Request
+```
+POST '/api/v1/sessions'
+
+{
+  "email": "whatever@example.com",
+  "password": "password"
+}
+```
+Example Successful Login Response:
+```
+{
+  "data": {
+    "id": null,
+    "type": "users",
+    "attributes": {
+      "email": "whatever@example.com",
+      "api_key": "61Se811f2-03fa-4rdf-b95a-e5290a6719"
+    }
+  }
+}
+```
 # README
 
 This README would normally document whatever steps are necessary to get the
