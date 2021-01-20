@@ -204,20 +204,69 @@ describe 'As a registered user' do
 		expect(error_data[:data][:message]).to eq('missing location')
 	end
 
-	it 'if destination and origin match' do
+	it 'will error out if either location is ambiguous' do
 		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
 		headers = {'CONTENT_TYPE' => 'application/json'}
 		trip_params = {
   		'origin': 'Denver,CO',
+  		'destination': 'york',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('ambiguous results, please refine query')
+	end
+	
+	it 'will error out if either location is ambiguous' do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'williams',
   		'destination': 'Denver,CO',
   		'api_key': 'jgn983hy48thw9begh98h4539h4'
 		}
 
 		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
-		require 'pry'; binding.pry
+
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('ambiguous results, please refine query')
 	end
 
-	### test if destination matches origin
-	### test if longer than 48 hours (which is how much weather data supplied - use weather for the day) - test from anchorage,ak to panama city, panama (127 hours)
-	### test that weather returned does not equal current weather at destination, or eta weather at origin
+	it 'will error out if location does not exist' do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'askdjhflas',
+  		'destination': 'Denver,CO',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('invalid location queried')
+	end
+
+	it 'checks future weather, not current weather' do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'Denver,CO',
+  		'destination': 'Bozeman,MT',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+		forecast_data = ForecastsFacade.get_forecasts('Bozeman,MT')
+		current_temp = forecast_data.current_weather.temp
+		
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		trip_data = JSON.parse(response.body, symbolize_names: true)
+		trip_weather = trip_data[:data][:attributes][:weather_at_eta][:temperature]
+		
+		expect(trip_weather).to_not eq(current_temp)
+	end
 end
