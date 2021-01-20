@@ -72,6 +72,46 @@ describe 'As a registered user' do
 		expect(error[:data][:message]).to eq('invalid API key')
 	end
 
+	it 'will inform you if the route is not possible to drive' do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'Denver,CO',
+  		'destination': 'London,UK',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		expect(response).to be_successful
+		expect(response.status).to eq(200)
+
+		trip = JSON.parse(response.body, symbolize_names: true)
+
+		expect(trip).to be_a(Hash)
+		expect(trip).to have_key(:data)
+		expect(trip[:data]).to be_a(Hash)
+		expect(trip[:data]).to have_key(:id)
+		expect(trip[:data][:id]).to eq(nil)
+		expect(trip[:data]).to have_key(:type)
+		expect(trip[:data][:type]).to be_a(String)
+		expect(trip[:data][:type]).to eq('roadtrip')
+		expect(trip[:data]).to have_key(:attributes)
+		expect(trip[:data][:attributes]).to be_a(Hash)
+
+		attributes = trip[:data][:attributes]
+
+		expect(attributes).to have_key(:start_city)
+		expect(attributes[:start_city]).to be_a(String)
+		expect(attributes).to have_key(:end_city)
+		expect(attributes[:end_city]).to be_a(String)
+		expect(attributes).to have_key(:travel_time)
+		expect(attributes[:travel_time]).to be_a(String)
+		expect(attributes[:travel_time]).to eq('impossible route')
+		expect(attributes).to have_key(:weather_at_eta)
+		expect(attributes[:weather_at_eta]).to eq({})
+	end
+
 	### test if route imossible (ALSO test this in facade)
 	### test for missing field
 	### test if destination matches origin
