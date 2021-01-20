@@ -266,7 +266,27 @@ describe 'As a registered user' do
 
 		trip_data = JSON.parse(response.body, symbolize_names: true)
 		trip_weather = trip_data[:data][:attributes][:weather_at_eta][:temperature]
-		
+
 		expect(trip_weather).to_not eq(current_temp)
+	end
+
+	it 'can still get weather data after 48 hours driving' do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'Anchorage,AK',
+  		'destination': 'CorpusChristi,TX',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		expect(response).to be_successful
+		expect(response.status).to eq(200)
+
+		trip = JSON.parse(response.body, symbolize_names: true)
+
+		expect(trip[:data][:attributes][:travel_time].split(' ').first.to_i).to be > 48
+		expect(trip[:data][:attributes][:weather_at_eta][:temperature]).to be_an(Integer).or be_a(Float)
 	end
 end
