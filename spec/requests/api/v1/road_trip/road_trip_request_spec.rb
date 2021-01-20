@@ -47,4 +47,5 @@ describe 'As a registered user' do
 	### test if route imossible (ALSO test this in facade)
 	### test for missing field
 	### test if destination matches origin
+	### test if longer than 48 hours (which is how much weather data supplied - use weather for the day) - test from anchorage,ak to panama city, panama (127 hours)
 end
