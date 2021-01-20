@@ -1,15 +1,23 @@
 class RoadTripsFacade
 	def self.create_trip(origin, destination)
 		trip_info = MapsService.fetch_trip_info(origin, destination)
-		return 'impossible route' if trip_info[:info][:statuscode] == 402
-		hours_to_destination = trip_hours(trip_info[:route][:formattedTime])
-		coordinates = get_coordinates(destination)
-		forecast = ForecastsService.fetch_forecast(coordinates)
-		if hours_to_destination <= 47
-			RoadTrip.new(trip_info, forecast[:hourly][hours_to_destination])
+		if trip_info[:info][:statuscode] == 402
+			trip_info[:route][:locations] = [origin, destination]
+			RoadTrip.new(trip_info, {})
+			# 2 Options below
+			# manually create trip_info and pass that in
+			# use manual_create to try to manually create a poro with a class method
 		else
-			days_to_destination = hours_to_destination / 24
-			RoadTrip.new(trip_info, forecast[:daily][days_to_destination])
+			return 'impossible route' if trip_info[:info][:statuscode] == 402
+			hours_to_destination = trip_hours(trip_info[:route][:formattedTime])
+			coordinates = get_coordinates(destination)
+			forecast = ForecastsService.fetch_forecast(coordinates)
+			if hours_to_destination <= 47
+				RoadTrip.new(trip_info, forecast[:hourly][hours_to_destination])
+			else
+				days_to_destination = hours_to_destination / 24
+				RoadTrip.new(trip_info, forecast[:daily][days_to_destination])
+			end
 		end
 	end
 
