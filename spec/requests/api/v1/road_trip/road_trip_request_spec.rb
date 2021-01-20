@@ -168,7 +168,55 @@ describe 'As a registered user' do
 		expect(error_data[:data][:message]).to eq('missing location')
 	end
 
-	### test for missing field
+	it "will error if origin field doesn't exist" do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+			'destination': 'Denver,CO',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		expect(response).to_not be_successful
+		expect(response.status).to eq(400)
+		
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('missing location')
+	end
+
+	it "will error if departure field doesn't exist" do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+			'origin': 'Denver,CO',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		expect(response).to_not be_successful
+		expect(response.status).to eq(400)
+		
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('missing location')
+	end
+
+	it 'if destination and origin match' do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'Denver,CO',
+  		'destination': 'Denver,CO',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+		require 'pry'; binding.pry
+	end
+
 	### test if destination matches origin
 	### test if longer than 48 hours (which is how much weather data supplied - use weather for the day) - test from anchorage,ak to panama city, panama (127 hours)
 	### test that weather returned does not equal current weather at destination, or eta weather at origin
