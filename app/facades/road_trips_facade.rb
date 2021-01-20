@@ -4,9 +4,6 @@ class RoadTripsFacade
 		if trip_info[:info][:statuscode] == 402
 			trip_info[:route][:locations] = [origin, destination]
 			RoadTrip.new(trip_info, {})
-			# 2 Options below
-			# manually create trip_info and pass that in
-			# use manual_create to try to manually create a poro with a class method
 		else
 			return 'impossible route' if trip_info[:info][:statuscode] == 402
 			hours_to_destination = trip_hours(trip_info[:route][:formattedTime])

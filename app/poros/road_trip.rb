@@ -34,8 +34,4 @@ class RoadTrip
 			{temperature: weather[:temp], conditions: weather[:weather][0][:description]}
 		end
 	end
-
-	def self.manual_create(info, origin, destination)
-		require 'pry'; binding.pry
-	end
 end
