@@ -2,11 +2,12 @@ require 'rails_helper'
 
 describe 'As a registered user' do
 	it 'can get trip info and destination weather of arrival time' do
-		headers = {"CONTENT_TYPE" => "application/json"}
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
 		trip_params = {
-  		"origin": "Denver,CO",
-  		"destination": "Pueblo,CO",
-  		"api_key": "jgn983hy48thw9begh98h4539h4"
+  		'origin': 'Denver,CO',
+  		'destination': 'Pueblo,CO',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
 		}
 
 		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
@@ -43,7 +44,34 @@ describe 'As a registered user' do
 		expect(attributes[:weather_at_eta][:conditions]).to be_a(String)
 	end
 
-	### test for no api key, 401 status returned
+	it "won't accept a request without a valid api_key" do
+		create(:user, api_key: 'someoneelseskey')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'Denver,CO',
+  		'destination': 'Pueblo,CO',
+  		'api_key': 'mykey'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		expect(response).to_not be_successful
+		expect(response.status).to eq(401)
+
+		error = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error).to be_a(Hash)
+		expect(error).to have_key(:data)
+		expect(error[:data]).to be_a(Hash)
+		expect(error[:data]).to have_key(:id)
+		expect(error[:data][:id]).to eq(nil)
+		expect(error[:data]).to have_key(:type)
+		expect(error[:data][:type]).to be_a(String)
+		expect(error[:data]).to have_key(:message)
+		expect(error[:data][:message]).to be_a(String)
+		expect(error[:data][:message]).to eq('invalid API key')
+	end
+
 	### test if route imossible (ALSO test this in facade)
 	### test for missing field
 	### test if destination matches origin
