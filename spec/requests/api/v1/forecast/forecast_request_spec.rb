@@ -133,7 +133,7 @@ describe 'Weather API' do
 		expect(error_data[:data]).to have_key(:type)
 		expect(error_data[:data][:type]).to be_a(String)
 		expect(error_data[:data]).to have_key(:message)
-		expect(error_data[:data][:message]).to eq('no location query entered')
+		expect(error_data[:data][:message]).to eq('missing location')
 
 		get '/api/v1/forecast?location= '
 
