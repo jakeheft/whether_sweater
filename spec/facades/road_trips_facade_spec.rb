@@ -9,4 +9,6 @@ describe RoadTripsFacade do
 		road_trip = RoadTripsFacade.create_trip(origin, destination, api_key)
 		expect(road_trip).to be_a(RoadTrip)
 	end
+
+	### test helper methods (trip hours, get coordinates, get lat lng)
 end
