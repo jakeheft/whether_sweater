@@ -19,4 +19,6 @@ describe RoadTrip do
 		weather_data = {}
 		road_trip = RoadTrip.new(trip_data, weather_data)
 	end
+
+	### test for helper methods
 end
