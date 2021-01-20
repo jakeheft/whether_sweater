@@ -5,7 +5,6 @@ class RoadTripsFacade
 			trip_info[:route][:locations] = [origin, destination]
 			RoadTrip.new(trip_info, {})
 		else
-			return 'impossible route' if trip_info[:info][:statuscode] == 402
 			hours_to_destination = trip_hours(trip_info[:route][:formattedTime])
 			coordinates = get_coordinates(destination)
 			forecast = ForecastsService.fetch_forecast(coordinates)
