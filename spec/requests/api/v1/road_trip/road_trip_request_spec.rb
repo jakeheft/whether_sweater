@@ -12,7 +12,7 @@ describe 'As a registered user' do
 		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
 
 		expect(response).to be_successful
-		expect(response.status).to eq(201)
+		expect(response.status).to eq(200)
 
 		trip = JSON.parse(response.body, symbolize_names: true)
 
@@ -48,4 +48,5 @@ describe 'As a registered user' do
 	### test for missing field
 	### test if destination matches origin
 	### test if longer than 48 hours (which is how much weather data supplied - use weather for the day) - test from anchorage,ak to panama city, panama (127 hours)
+	### test that weather returned does not equal current weather at destination, or eta weather at origin
 end
