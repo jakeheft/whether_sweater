@@ -7,7 +7,11 @@ class Api::V1::RoadTripsController < ApplicationController
 			render json: ErrorSerializer.empty_query, status: 400
 		else
 			road_trip = RoadTripsFacade.create_trip(params[:road_trip][:origin], params[:road_trip][:destination])
-			render json: RoadTripsSerializer.new(road_trip)
+			if road_trip.class == String
+				render json: ErrorSerializer.invalid_location(road_trip), status: 400
+			else
+				render json: RoadTripsSerializer.new(road_trip)
+			end
 		end
 	end
 
