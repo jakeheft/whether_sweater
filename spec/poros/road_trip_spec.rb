@@ -73,5 +73,59 @@ describe RoadTrip do
 		expect(road_trip.weather_at_eta).to eq(expected_weather)
 	end
 
+	it '#readable_time' do
+		trip_data = {
+			route: {
+				formattedTime: '09:13:50',
+				locations: [{
+					adminArea5: 'Denver',
+					adminArea3: 'CO'
+				},
+				{
+					adminArea5: 'Des Moines',
+					adminArea3: 'IA'
+				}
+			]
+			}
+		}
+		weather_data = {
+			temp: -20.09,
+			weather: [
+				{
+					description: 'bbbbrrrrrrr'
+				}
+			]
+		}
+		road_trip = RoadTrip.new(trip_data, weather_data)
+		expect(road_trip.readable_time("19:20:50")).to eq('19 hours, 20 min')
+	end
+
+	it '#readable_time, if time == nil' do
+		trip_data = {
+			route: {
+				formattedTime: '09:13:50',
+				locations: [{
+					adminArea5: 'Denver',
+					adminArea3: 'CO'
+				},
+				{
+					adminArea5: 'Des Moines',
+					adminArea3: 'IA'
+				}
+			]
+			}
+		}
+		weather_data = {
+			temp: -20.09,
+			weather: [
+				{
+					description: 'bbbbrrrrrrr'
+				}
+			]
+		}
+		road_trip = RoadTrip.new(trip_data, weather_data)
+		expect(road_trip.readable_time(nil)).to eq('impossible route')
+	end
+
 	### test for helper methods
 end

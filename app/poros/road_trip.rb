@@ -1,5 +1,6 @@
 class RoadTrip
-	attr_accessor :travel_time, :start_city, :end_city, :weather_at_eta
+	attr_reader :travel_time, :start_city, :end_city, :weather_at_eta
+
 	def initialize(trip, weather)
 		@travel_time = readable_time(trip[:route][:formattedTime])
 		@start_city = readable_city(trip[:route][:locations][0])
