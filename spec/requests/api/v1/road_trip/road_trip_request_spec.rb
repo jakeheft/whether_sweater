@@ -113,6 +113,7 @@ describe 'As a registered user' do
 	end
 
 	it "won't let you leave api_key field blank" do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
 		headers = {'CONTENT_TYPE' => 'application/json'}
 		trip_params = {
   		'origin': 'Denver,CO',
@@ -127,6 +128,25 @@ describe 'As a registered user' do
 		error_data = JSON.parse(response.body, symbolize_names: true)
 
 		expect(error_data[:data][:message]).to eq('invalid API key')
+	end
+
+	it "won't let you leave destination field blank" do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+			'origin': 'Denver,CO',
+			'destination': '',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+		
+		expect(response).to_not be_successful
+		expect(response.status).to eq(400)
+		
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('missing location')
 	end
 
 	### test for missing field
