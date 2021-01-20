@@ -1,13 +1,9 @@
 class RoadTripsFacade
-	def self.create_trip(origin, destination, api_key)
-		# call MapsService to get_trip_info - travel time, start city, end city (copy from test this morning)
+	def self.create_trip(origin, destination)
 		trip_info = MapsService.fetch_trip_info(origin, destination)
-		# if trip info gets 'impossible route', then return that message
 		return 'impossible route' if trip_info[:info][:statuscode] == 402
-		# call MapService to get_coordinates
 		hours_to_destination = trip_hours(trip_info[:route][:formattedTime])
 		coordinates = get_coordinates(destination)
-		# call ForecastService to get_forecast (with coordinates & destination)
 		forecast = ForecastsService.fetch_forecast(coordinates)
 		if hours_to_destination <= 47
 			RoadTrip.new(trip_info, forecast[:hourly][hours_to_destination])
