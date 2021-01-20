@@ -112,7 +112,23 @@ describe 'As a registered user' do
 		expect(attributes[:weather_at_eta]).to eq({})
 	end
 
-	### test if route imossible (ALSO test this in facade)
+	it "won't let you leave api_key field blank" do
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+  		'origin': 'Denver,CO',
+  		'destination': 'London,UK'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+		
+		expect(response).to_not be_successful
+		expect(response.status).to eq(401)
+		
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('invalid API key')
+	end
+
 	### test for missing field
 	### test if destination matches origin
 	### test if longer than 48 hours (which is how much weather data supplied - use weather for the day) - test from anchorage,ak to panama city, panama (127 hours)
