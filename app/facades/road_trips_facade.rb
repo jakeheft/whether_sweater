@@ -2,9 +2,46 @@ class RoadTripsFacade
 	def self.create_trip(origin, destination, api_key)
 		# call MapsService to get_trip_info - travel time, start city, end city (copy from test this morning)
 		trip_info = MapsService.fetch_trip_info(origin, destination)
-		require 'pry'; binding.pry
 		# if trip info gets 'impossible route', then return that message
+		return 'impossible route' if trip_info[:info][:statuscode] == 402
 		# call MapService to get_coordinates
+		hours_to_destination = trip_hours(trip_info[:route][:formattedTime])
+		coordinates = get_coordinates(destination)
 		# call ForecastService to get_forecast (with coordinates & destination)
+		forecast = ForecastsService.fetch_forecast(coordinates)
+		# require 'pry'; binding.pry
+		if hours_to_destination <= 47
+			rt = RoadTrip.new(trip_info, forecast[:hourly][hours_to_destination])
+			require 'pry'; binding.pry
+		else
+			days_to_destination = hours_to_destination / 24
+			rt = RoadTrip.new(trip_info, forecast[:daily][days_to_destination])
+			require 'pry'; binding.pry
+		end
+	end
+
+	def self.trip_hours(time)
+		split_time = time.split(':')
+		hours = split_time[0].to_i
+		hours += 1 if split_time[1].to_i >= 30
+		hours
+	end
+
+	def self.get_coordinates(location)
+		coordinate_data = MapsService.fetch_coordinates(location)
+		if coordinate_data[:results][0][:locations].count > 3
+			return 'ambiguous results, please refine query'
+		else
+			coords = get_lat_long(coordinate_data)
+			if coords == ({:lat=>39.390897, :lng=>-99.066067})
+				'invalid location queried'
+			else
+				coords
+			end
+		end
+	end
+
+	def self.get_lat_long(coordinate_data)
+		coordinate_data[:results][0][:locations][0][:latLng]
 	end
 end
