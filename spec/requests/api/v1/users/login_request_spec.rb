@@ -14,7 +14,7 @@ describe 'As a registered user' do
   		"password": "password"
 		}
 
-		post '/api/v1/sessions', headers: headers, params: JSON.generate(user: login_params)
+		post '/api/v1/sessions', headers: headers, params: JSON.generate(login_params)
 
 		expect(response).to be_successful
 		expect(response.status).to eq(200)
@@ -52,7 +52,7 @@ describe 'As a registered user' do
   		"password": "password"
 		}
 
-		post '/api/v1/sessions', headers: headers, params: JSON.generate(user: login_params)
+		post '/api/v1/sessions', headers: headers, params: JSON.generate(login_params)
 
 		expect(response).to_not be_successful
 		expect(response.status).to eq(401)
@@ -83,7 +83,7 @@ describe 'As a registered user' do
   		"password": "PASSWORD"
 		}
 
-		post '/api/v1/sessions', headers: headers, params: JSON.generate(user: login_params)
+		post '/api/v1/sessions', headers: headers, params: JSON.generate(login_params)
 
 		expect(response).to_not be_successful
 		expect(response.status).to eq(401)
