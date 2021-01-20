@@ -11,8 +11,8 @@ describe 'When a user registers' do
 		
 		expect(User.last).to eq(nil)
 
-		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
-		
+		post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
+
 		expect(response).to be_successful
 		expect(response.status).to eq(201)
 		expect(User.last).to be_a(User)
@@ -49,8 +49,8 @@ describe 'When a user registers' do
   		"password_confirmation": "password"
 		}
 
-		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
-
+		post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
+		
 		expect(response).to_not be_successful
 		expect(response.status).to eq(409)
 
@@ -75,7 +75,7 @@ describe 'When a user registers' do
   		"password_confirmation": "wordpass"
 		}
 
-		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
 
 		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
@@ -100,7 +100,7 @@ describe 'When a user registers' do
   		"password": "password"
 		}
 
-		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
 
 		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
@@ -125,7 +125,7 @@ describe 'When a user registers' do
   		"password_confirmation": "password"
 		}
 
-		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
 
 		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
@@ -150,7 +150,7 @@ describe 'When a user registers' do
 			"password_confirmation": "password"
 		}
 
-		post '/api/v1/users', headers: headers, params: JSON.generate(user: user_params)
+		post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
 
 		expect(response).to_not be_successful
 		expect(response.status).to eq(403)
