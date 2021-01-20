@@ -9,14 +9,11 @@ class RoadTripsFacade
 		coordinates = get_coordinates(destination)
 		# call ForecastService to get_forecast (with coordinates & destination)
 		forecast = ForecastsService.fetch_forecast(coordinates)
-		# require 'pry'; binding.pry
 		if hours_to_destination <= 47
-			rt = RoadTrip.new(trip_info, forecast[:hourly][hours_to_destination])
-			require 'pry'; binding.pry
+			RoadTrip.new(trip_info, forecast[:hourly][hours_to_destination])
 		else
 			days_to_destination = hours_to_destination / 24
-			rt = RoadTrip.new(trip_info, forecast[:daily][days_to_destination])
-			require 'pry'; binding.pry
+			RoadTrip.new(trip_info, forecast[:daily][days_to_destination])
 		end
 	end
 
