@@ -131,5 +131,33 @@ describe RoadTrip do
 		expect(road_trip.readable_city('Denver,CO')).to eq('Denver,CO')
 	end
 
-	### test for helper methods
+	it '#formatted_weather()' do
+		trip_data = {
+			route: {
+				formattedTime: '09:13:50',
+				locations: [{
+					adminArea5: 'Denver',
+					adminArea3: 'CO'
+				},
+				{
+					adminArea5: 'Des Moines',
+					adminArea3: 'IA'
+				}
+			]
+			}
+		}
+		weather_data = {
+			temp: -20.09,
+			weather: [
+				{
+					description: 'bbbbrrrrrrr'
+				}
+			]
+		}
+		road_trip = RoadTrip.new(trip_data, weather_data)
+
+		expect(road_trip.formatted_weather({:temp=>-20.09, :weather=>[{:description=>'bbbbrrrrrrr'}]})).to eq({temperature: -20.09, conditions: 'bbbbrrrrrrr'})
+		expect(road_trip.formatted_weather({:temp=>{:max=>99.8}, :weather=>[{:description=>"freaking hot"}]})).to eq({temperature: 99.8, conditions: 'freaking hot'})
+		expect(road_trip.formatted_weather({})).to eq({})
+	end
 end
