@@ -134,6 +134,35 @@ Example Successful Login Response:
   }
 }
 ```
+
+#### Road Trip Request
+```
+POST '/api/v1/road_trip'
+
+{
+  "origin": "Denver,CO",
+  "destination": "Pueblo,CO",
+  "api_key": "kdsluw09Df0sdfjJ"
+}
+```
+Example Successful Road Trip Response:
+```
+{
+  "data": {
+    "id": null,
+    "type": "roadtrip",
+    "attributes": {
+      "start_city": "Denver, CO",
+      "end_city": "Pueblo, CO",
+      "travel_time": "1 hours, 48 minutes"
+      "weather_at_eta": {
+        "temperature": 59.4,
+        "conditions": "light rain"
+      }
+    }
+  }
+}
+```
 # README
 
 This README would normally document whatever steps are necessary to get the

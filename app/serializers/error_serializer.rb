@@ -4,7 +4,7 @@ class ErrorSerializer
 			data: {
 				id: nil,
 				type: 'error',
-				message: 'no location query entered'
+				message: 'missing location'
 			}
 		}
 	end
@@ -55,6 +55,16 @@ class ErrorSerializer
 				id: nil,
 				type: 'error',
 				message: 'invalid login credentials'
+			}
+		}
+	end
+
+	def self.invalid_api_key
+		{
+			data: {
+				id: nil,
+				type: 'error',
+				message: 'invalid API key'
 			}
 		}
 	end

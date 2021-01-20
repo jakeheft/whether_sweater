@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe CoordinatesService do
-	it 'can get coordinates with city, state' do
+describe MapsService do
+	it '.fetch_coordinates()' do
 		location = 'denver,co'
 
-		coordinate_data = CoordinatesService.fetch_coordinates(location)
+		coordinate_data = MapsService.fetch_coordinates(location)
 		expect(coordinate_data).to be_a(Hash)
 		expect(coordinate_data).to have_key(:info)
 		expect(coordinate_data).to have_key(:options)
@@ -100,5 +100,30 @@ describe CoordinatesService do
 		expect(location[:displayLatLng][:lng]).to be_a(Float)
  		expect(location).to have_key(:mapUrl)
 		expect(location[:mapUrl]).to be_a(String)
+	end
+
+	it '.fetch_trip_info()' do
+		origin = 'boston,ma'
+		destination = 'newyork,ny'
+
+		trip_info = MapsService.fetch_trip_info(origin, destination)
+
+		expect(trip_info).to be_a(Hash)
+		expect(trip_info).to have_key(:route)
+		expect(trip_info[:route]).to be_a(Hash)
+
+		route = trip_info[:route]
+
+		expect(route).to have_key(:formattedTime)
+		expect(route[:formattedTime]).to be_a(String)
+		expect(route).to have_key(:locations)
+		expect(route[:locations]).to be_a(Array)
+
+		location = route[:locations][0]
+
+		expect(location).to have_key(:adminArea5)
+		expect(location[:adminArea5]).to be_a(String)
+		expect(location).to have_key(:adminArea3)
+		expect(location[:adminArea3]).to be_a(String)
 	end
 end
