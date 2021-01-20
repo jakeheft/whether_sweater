@@ -1,6 +1,14 @@
 # Whether to Sweater or not in this Weather
 
 ## About this Application
+Whether, Sweater? is an app that allows a registered user to plan for a road trip giving them trip time and weather details. The app checks drive time (consuming MapQuest's API) of a trip and uses that time/destination city to provide the weather upon arrival (consuming OpenWeather's API), exposing this data to the front end. This backend application was built based on (fictional) front end requirements.
+
+## Learning Goals
+- Expose an API that aggregates data from multiple external APIs
+- Expose an API that requires an authentication token
+- Expose an API for CRUD functionality
+- Determine completion criteria based on the needs Front End development team
+- Research, select, and consume an API based on your needs as a developer
 
 ## Setup
 To use to this app, you will need 3 different API keys:
@@ -9,7 +17,10 @@ To use to this app, you will need 3 different API keys:
 - [Unsplash](https://unsplash.com/developers)
   * Unsplash will grant you a demo key (50 calls per hour) for an app in development. To apply for a production key, which will grant you 5,000 calls per hour, submit a screenshot of a photo on the app that has been properly attributed to Unsplash and the photographer.
 
+- Clone down this repo
+- Run `rails db:{create,migrate}`
 - Run `$ figaro install`
+- Run `bundle install`
 - Add your 3 API keys to the `application.yml` file that Figaro creates in the following manner:
 ```
 UNSPLASH_API_KEY: <API key>
@@ -163,27 +174,3 @@ Example Successful Road Trip Response:
   }
 }
 ```
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
