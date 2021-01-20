@@ -4,7 +4,7 @@ class ErrorSerializer
 			data: {
 				id: nil,
 				type: 'error',
-				message: 'no location query entered'
+				message: 'missing location'
 			}
 		}
 	end
