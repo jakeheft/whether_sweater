@@ -140,6 +140,25 @@ describe 'As a registered user' do
 		}
 
 		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
+
+		expect(response).to_not be_successful
+		expect(response.status).to eq(400)
+		
+		error_data = JSON.parse(response.body, symbolize_names: true)
+
+		expect(error_data[:data][:message]).to eq('missing location')
+	end
+
+	it "won't let you leave origin field blank" do
+		create(:user, api_key: 'jgn983hy48thw9begh98h4539h4')
+		headers = {'CONTENT_TYPE' => 'application/json'}
+		trip_params = {
+			'origin': '',
+			'destination': 'Denver,CO',
+  		'api_key': 'jgn983hy48thw9begh98h4539h4'
+		}
+
+		post '/api/v1/road_trip', headers: headers, params: JSON.generate(trip_params)
 		
 		expect(response).to_not be_successful
 		expect(response.status).to eq(400)
