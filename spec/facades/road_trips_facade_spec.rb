@@ -25,5 +25,23 @@ describe RoadTripsFacade do
 		expect(road_trip.travel_time).to eq('impossible route')
 	end
 
-	### test helper methods (trip hours, get coordinates, get lat lng)
+	it "doesn't get any results" do
+		coordinates = RoadTripsFacade.get_coordinates(' ')
+
+		expect(coordinates).to eq('invalid location queried')
+	end
+
+	it "won't allow ambiguous results" do
+		coordinates = RoadTripsFacade.get_coordinates('york')
+
+		expect(coordinates).to eq('ambiguous results, please refine query')
+	end
+
+	it 'will return a string if coordinates cannot be found' do
+		coordinates1 = RoadTripsFacade.create_trip('york', 'denver,co')
+		coordinates2 = RoadTripsFacade.create_trip('boston,ma', ' ')
+
+		expect(coordinates1).to eq('ambiguous results, please refine query')
+		expect(coordinates2).to eq('invalid location queried')
+	end
 end
