@@ -97,10 +97,12 @@ describe RoadTrip do
 			]
 		}
 		road_trip = RoadTrip.new(trip_data, weather_data)
+
 		expect(road_trip.readable_time("19:20:50")).to eq('19 hours, 20 min')
+		expect(road_trip.readable_time(nil)).to eq('impossible route')
 	end
 
-	it '#readable_time, if time == nil' do
+	it '#readable_city()' do
 		trip_data = {
 			route: {
 				formattedTime: '09:13:50',
@@ -124,7 +126,9 @@ describe RoadTrip do
 			]
 		}
 		road_trip = RoadTrip.new(trip_data, weather_data)
-		expect(road_trip.readable_time(nil)).to eq('impossible route')
+
+		expect(road_trip.readable_city({:adminArea5=>"Denver", :adminArea3=>"CO"})).to eq('Denver, CO')
+		expect(road_trip.readable_city('Denver,CO')).to eq('Denver,CO')
 	end
 
 	### test for helper methods
