@@ -1,7 +1,7 @@
-# Whether to Sweater or not in this Weather
+# Whether to Sweater?
 
 ## About this Application
-Whether, Sweater? is an app that allows a registered user to plan for a road trip giving them trip time and weather details. The app checks drive time (consuming MapQuest's API) of a trip and uses that time/destination city to provide the weather upon arrival (consuming OpenWeather's API), exposing this data to the front end. This backend application was built based on (fictional) front end requirements.
+Whether to Sweater? is an app that allows a registered user to plan for a road trip giving them trip time and weather details. The app checks drive time (consuming MapQuest's API) of a trip and uses that time/destination city to provide the weather upon arrival (consuming OpenWeather's API), exposing this data to the front end. This back-end application was built based on (fictional) front end requirements.
 
 ## Learning Goals
 - Expose an API that aggregates data from multiple external APIs
@@ -9,29 +9,39 @@ Whether, Sweater? is an app that allows a registered user to plan for a road tri
 - Expose an API for CRUD functionality
 - Determine completion criteria based on the needs Front End development team
 - Research, select, and consume an API based on your needs as a developer
+- Work under a deadline - I had 5 days to build this application from scratch
+- Continue to improve strong testing practices
 
 ## Setup
+Prerequisites:
+- Ruby 2.5.3
+- Rails 5.2.4.4
+
 To use to this app, you will need 3 different API keys:
 - [MapQuest](https://developer.mapquest.com)
 - [OpenWeather](https://openweathermap.org/appid)
 - [Unsplash](https://unsplash.com/developers)
   * Unsplash will grant you a demo key (50 calls per hour) for an app in development. To apply for a production key, which will grant you 5,000 calls per hour, submit a screenshot of a photo on the app that has been properly attributed to Unsplash and the photographer.
 
-- Clone down this repo
-- Run `rails db:{create,migrate}`
+- Clone down this repo, then `cd` into the repo
+- Run `$ bundle install`
+- Run `$ rails db:{create,migrate}`
 - Run `$ figaro install`
-- Run `bundle install`
-- Add your 3 API keys to the `application.yml` file that Figaro creates in the following manner:
+- Inside your `config` folder add your 3 API keys to the `application.yml` file (created by Figaro) in the following manner:
 ```
 UNSPLASH_API_KEY: <API key>
 MAPQUEST_API_KEY: <API key>
 OPENWEATHER_API_KEY: <API key>
 ```
+- Run `rails s` and use an API interface tool (such as [Postman](https://www.postman.com/)) to interact with the app, using the endpoints below.
 
 ## Endpoints
 #### Forecast Request
+Use this endpoint to request forecast data for a city. Current, daily (5 days), and hourly (8 hours) weather data provided.
 ```
 GET '/api/v1/forecast?location=<enter city & state/country (e.g denver,co)>
+Content-Type: application/json
+Accept: application/json
 ```
 Example Forecast Response
 ```
@@ -80,8 +90,11 @@ Example Forecast Response
 }
 ```
 #### Background Image Request
+The front-end has requested a background image to display a city's weather over. Use this endpoint to find an image (provided by Unsplash) of a city by entering the city into the location parameters.
 ```
 GET '/api/v1/backgrounds?location=<enter city & state/country (e.g denver,co)>
+Content-Type: application/json
+Accept: application/json
 ```
 Example Background Image Response
 ```
@@ -100,8 +113,11 @@ Example Background Image Response
 }
 ```
 #### User Registration Request
+Use this endpoint to register a new user by sending a JSON payload through the body of the request. An API key will be generated upon login.
 ```
 POST '/api/v1/users'
+Content-Type: application/json
+Accept: application/json
 
 {
   "email": "whatever@example.com",
@@ -124,8 +140,11 @@ Example Successful Registration Response:
 ```
 
 #### User Login Request
+Use this endpoint to log in a user by sending a JSON payload through the body of the request. Their email and API key will be returned in the response.
 ```
 POST '/api/v1/sessions'
+Content-Type: application/json
+Accept: application/json
 
 {
   "email": "whatever@example.com",
@@ -147,8 +166,11 @@ Example Successful Login Response:
 ```
 
 #### Road Trip Request
+Use this endpoint to generate trip details by sending a JSON payload through the body of the request. Submit an origin city and a destination city with a valid API key to get total travel time as well as the weather forecast at the time of arrival in your destination city.
 ```
 POST '/api/v1/road_trip'
+Content-Type: application/json
+Accept: application/json
 
 {
   "origin": "Denver,CO",
