@@ -33,7 +33,7 @@ UNSPLASH_API_KEY: <API key>
 MAPQUEST_API_KEY: <API key>
 OPENWEATHER_API_KEY: <API key>
 ```
-- Run `rails s` and use an API interface tool (such as [Postman](https://www.postman.com/)) to interact with the app, using the endpoints below.
+- Run `rails s` and use an API interface tool (such as [Postman](https://www.postman.com/)) to interact with the app, using the endpoints below.  
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6fcbe32882faad889b73)
 
 ## Endpoints
