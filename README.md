@@ -1,4 +1,4 @@
-# Whether to Sweater?
+# Whether to Sweater? 
 
 ## About this Application
 Whether to Sweater? is an app that allows a registered user to plan for a road trip giving them trip time and weather details. The app checks drive time (consuming MapQuest's API) of a trip and uses that time/destination city to provide the weather upon arrival (consuming OpenWeather's API), exposing this data to the front end. This back-end application was built based on (fictional) front end requirements.
@@ -29,11 +29,12 @@ To use to this app, you will need 3 different API keys:
 - Run `$ figaro install`
 - Inside your `config` folder add your 3 API keys to the `application.yml` file (created by Figaro) in the following manner:
 ```
-UNSPLASH_API_KEY: <API key>
-MAPQUEST_API_KEY: <API key>
-OPENWEATHER_API_KEY: <API key>
+UNSPLASH_API_KEY: <your API key>
+MAPQUEST_API_KEY: <your API key>
+OPENWEATHER_API_KEY: <your API key>
 ```
-- Run `rails s` and use an API interface tool (such as [Postman](https://www.postman.com/)) to interact with the app, using the endpoints below.
+- Run `rails s` and use an API interface tool (such as [Postman](https://www.postman.com/)) to interact with the app, using the endpoints below.  
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6fcbe32882faad889b73)
 
 ## Endpoints
 #### Forecast Request
