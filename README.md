@@ -1,4 +1,4 @@
-# Whether to Sweater? 
+# Whether to Sweater?
 
 ## About this Application
 Whether to Sweater? is an app that allows a registered user to plan for a road trip giving them trip time and weather details. The app checks drive time (consuming MapQuest's API) of a trip and uses that time/destination city to provide the weather upon arrival (consuming OpenWeather's API), exposing this data to the front end. This back-end application was built based on (fictional) front end requirements.
